@@ -55,11 +55,11 @@ with tab1:
                     st.dataframe(summary_df, width="stretch", height=df_height, hide_index=True)
                 
                 with col2:
-                    total_net = df['amount'].sum()
+                    total_net = categorized_df[categorized_df['category'] != 'ETFs']['amount'].sum()
                     color = "#ff4b4b" if total_net < 0 else "#09ab3b"
                     html_str = f"""
                     <div style='background-color: #262730; padding: 20px; border-radius: 10px; text-align: center; border: 1px solid #333; margin-top: 20px;'>
-                        <h3 style='margin:0; color: #fafafa; font-weight: normal;'>Total Net</h3>
+                        <h3 style='margin:0; color: #fafafa; font-weight: normal;'>Total Net (w/o ETFs)</h3>
                         <h1 style='margin:0; color: {color}; font-size: 3.5rem;'>€{total_net:,.2f}</h1>
                     </div>
                     """

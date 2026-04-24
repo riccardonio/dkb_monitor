@@ -18,12 +18,17 @@
     "systemgastronomie",
     "heyzel.coffee",
     "nuva.augsburg",
-    "cigkoftem"
+    "cigkoftem",
+    "gyroland",
+    "backwerk",
+    "flannigan.s.post",
+    "food.container.gmbh",
+    "le.bonta.di.toschi"
   ],
   "stipendio": [
     "gehalt"
   ],
-  "spesa_online": [
+  "acquisti online & offline": [
     "amazon",
     "amzn.mktp",
     "mznprime",
@@ -31,7 +36,9 @@
     "best secret",
     "limango",
     "rossmann",
-    "dm.drogerie"
+    "dm.drogerie",
+    "media.markt",
+    "pittarosso"
   ],
   "terapie": [
     "sorrento",
@@ -39,25 +46,28 @@
   ],
   "avvocati": [
     "wunsch",
-    "schã¶nauer",
     "374/26sc07of"
   ],
   "mantenimento_bimbi": [
     "kindesunterhalt"
   ],
   "trasporti": [
-    "db vertrieb"
+    "db vertrieb",
+    "augsburg carsharing",
+    "obb-personenverkehr"
   ],
   "abbonamenti": [
     "dazn",
-    "1048837362326/pp.9684.pp",
+    "Ihr Einkauf bei Google Payment Ireland Limited",
     "finion capital"
   ],
   "alloggio": [
     "airbnb",
     "hotel.ibis",
     "forteil",
-    "immobilien scout gmbh"
+    "immobilien scout gmbh",
+    "ikea",
+    "tino pfeilschifter"
   ],
   "essenziali": [
     "apotheke",
@@ -66,7 +76,10 @@
   "svago": [
     "brunnen.bar",
     "berry..bowls",
-    "eisdiele.stanghetto"
+    "eisdiele.stanghetto",
+    "ombretta",
+    "picnic/augsburg",
+    "numeri.uno"
   ],
   "ETFs": [
     "wertpapier-sparplan",

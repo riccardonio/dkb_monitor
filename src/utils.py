@@ -45,7 +45,7 @@ def get_df_transactions(filepath):
     
     # Filter out rows where the receiver contains Riccardo Parenti or Parenti Riccardo,
     # UNLESS the receiver also contains the keyword "gehalt"
-    mask_name = df_mini['receiver'].str.contains('Riccardo Parenti|Parenti Riccardo', case=False, na=False)
+    mask_name = df_mini['receiver'].str.contains('Riccardo Parenti|Parenti Riccardo|Parenti,Riccardo|Riccardo, Parenti', case=False, na=False)
     mask_gehalt = df_mini['receiver'].str.contains('gehalt', case=False, na=False)
     
     # Drop the row if it matches the name BUT does NOT contain 'gehalt'
