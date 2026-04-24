@@ -1,7 +1,8 @@
 
-from dkb_config import FILENAME_TRANSACTIONS, categories
+from dkb_config import FILENAME_TRANSACTIONS, load_categories
 from utils import get_df_transactions, categorize_transactions
 
+categories = load_categories()
 df = get_df_transactions(FILENAME_TRANSACTIONS)
 
 categorized_df = categorize_transactions(df, categories)
@@ -17,6 +18,7 @@ print(f"Monthly Total spent on online_shopping: {total_food_cost}")
 
 
 # print categorized_df where column category is unkknown
-categorized_df[categorized_df['category'] == 'uncategorized'].to_csv("uncategorized.csv")
+df_uncategorized = categorized_df[categorized_df['category'] == 'uncategorized']
+df_uncategorized.to_csv("uncategorized.csv")
 
     

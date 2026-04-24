@@ -1,1 +1,7 @@
 notebooks/test_connection.ipynb
+data/*csv
+*.csv
+__pycache__
+credentials.py
+
+

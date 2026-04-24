@@ -1,0 +1,78 @@
+{
+  "food": [
+    "rewe",
+    "netto",
+    "lidl",
+    "wolf",
+    "conad",
+    "esselunga",
+    "man.energy.solutions",
+    "aldi",
+    "supermercati",
+    "takeaway",
+    "knuspr",
+    "everllence",
+    "aramark",
+    "burger",
+    "tap.house",
+    "systemgastronomie",
+    "heyzel.coffee",
+    "nuva.augsburg",
+    "cigkoftem"
+  ],
+  "salary": [
+    "gehalt"
+  ],
+  "online_shopping": [
+    "amazon",
+    "amzn.mktp",
+    "mznprime",
+    "dm-drogerie",
+    "best secret",
+    "limango",
+    "rossmann",
+    "dm.drogerie"
+  ],
+  "Terapie": [
+    "sorrento",
+    "carlo leone"
+  ],
+  "Avvocati": [
+    "wunsch",
+    "schã¶nauer",
+    "374/26sc07of"
+  ],
+  "Mantenimento Bimbi": [
+    "kindesunterhalt"
+  ],
+  "Trasporti": [
+    "db vertrieb"
+  ],
+  "Abbonamenti": [
+    "dazn",
+    "1048837362326/pp.9684.pp",
+    "finion capital"
+  ],
+  "Alloggio": [
+    "airbnb",
+    "hotel.ibis"
+  ],
+  "Essenziali": [
+    "apotheke",
+    "bauhaus"
+  ],
+  "Svago": [
+    "brunnen.bar",
+    "berry..bowls",
+    "eisdiele.stanghetto"
+  ],
+  "ETFs": [
+    "wertpapier-sparplan"
+  ],
+  "Telefonia": [
+    "telefonica germany gmbh"
+  ],
+  "Prelievi": [
+    "stadtsparkasse.augsburg"
+  ]
+}
