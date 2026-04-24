@@ -1,5 +1,5 @@
 {
-  "food": [
+  "cibo": [
     "rewe",
     "netto",
     "lidl",
@@ -20,10 +20,10 @@
     "nuva.augsburg",
     "cigkoftem"
   ],
-  "salary": [
+  "stipendio": [
     "gehalt"
   ],
-  "online_shopping": [
+  "spesa_online": [
     "amazon",
     "amzn.mktp",
     "mznprime",
@@ -33,46 +33,50 @@
     "rossmann",
     "dm.drogerie"
   ],
-  "Terapie": [
+  "terapie": [
     "sorrento",
     "carlo leone"
   ],
-  "Avvocati": [
+  "avvocati": [
     "wunsch",
     "schã¶nauer",
     "374/26sc07of"
   ],
-  "Mantenimento Bimbi": [
+  "mantenimento_bimbi": [
     "kindesunterhalt"
   ],
-  "Trasporti": [
+  "trasporti": [
     "db vertrieb"
   ],
-  "Abbonamenti": [
+  "abbonamenti": [
     "dazn",
     "1048837362326/pp.9684.pp",
     "finion capital"
   ],
-  "Alloggio": [
+  "alloggio": [
     "airbnb",
-    "hotel.ibis"
+    "hotel.ibis",
+    "forteil",
+    "immobilien scout gmbh"
   ],
-  "Essenziali": [
+  "essenziali": [
     "apotheke",
     "bauhaus"
   ],
-  "Svago": [
+  "svago": [
     "brunnen.bar",
     "berry..bowls",
     "eisdiele.stanghetto"
   ],
   "ETFs": [
-    "wertpapier-sparplan"
+    "wertpapier-sparplan",
+    "etf luca emma"
   ],
-  "Telefonia": [
+  "telefonia": [
     "telefonica germany gmbh"
   ],
-  "Prelievi": [
-    "stadtsparkasse.augsburg"
+  "prelievi": [
+    "stadtsparkasse.augsburg",
+    "vr.bank"
   ]
 }

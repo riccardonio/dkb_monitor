@@ -2,6 +2,11 @@ from pathlib import Path
 import os
 import json
 
+DKB_USER = "dummy"
+DKB_PASSWORD = "dummy"
+tan_insert = True
+debug = True
+CC = "dummy"
 
 FILE_NAME = "transactions_maerz_2026.csv"
 

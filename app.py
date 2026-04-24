@@ -21,8 +21,11 @@ tab1, tab2 = st.tabs(["Analysis", "Manage Categories"])
 with tab1:
     st.markdown("Upload a CSV file containing your DKB transactions to analyze them.")
 
-    uploaded_file = st.file_uploader("Select a CSV file", type="csv")
-    months_parameter = st.number_input("Number of Months (for average calculation)", min_value=1, value=1, step=1)
+    col_upload, col_months = st.columns([3, 1])
+    with col_upload:
+        uploaded_file = st.file_uploader("Select a CSV file", type="csv")
+    with col_months:
+        months_parameter = st.number_input("Number of Months", min_value=1, value=1, step=1)
 
     if uploaded_file is not None:
         if st.button("Run Analysis"):
@@ -44,20 +47,27 @@ with tab1:
                 
                 # Sort by the Total Sum (ascending since expenses are negative)
                 summary_df = summary_df.sort_values(by='Total Sum (€)', ascending=True)
-                
                 col1, col2 = st.columns([1, 2])
                 
                 with col1:
-                    st.dataframe(summary_df, use_container_width=True, hide_index=True)
-                    
+                    # Determine height to show all rows (approx 35px per row + 38px header)
+                    df_height = len(summary_df) * 35 + 38
+                    st.dataframe(summary_df, width="stretch", height=df_height, hide_index=True)
+                
                 with col2:
-                    # Create a bar chart. Set category as index for the chart
-                    chart_data = summary_df.set_index('Category')
-                    st.bar_chart(chart_data)
+                    total_net = df['amount'].sum()
+                    color = "#ff4b4b" if total_net < 0 else "#09ab3b"
+                    html_str = f"""
+                    <div style='background-color: #262730; padding: 20px; border-radius: 10px; text-align: center; border: 1px solid #333; margin-top: 20px;'>
+                        <h3 style='margin:0; color: #fafafa; font-weight: normal;'>Total Net</h3>
+                        <h1 style='margin:0; color: {color}; font-size: 3.5rem;'>€{total_net:,.2f}</h1>
+                    </div>
+                    """
+                    st.markdown(html_str, unsafe_allow_html=True)
                       
                 st.subheader("Uncategorized Transactions")
                 df_uncategorized = categorized_df[categorized_df['category'] == 'uncategorized']
-                st.dataframe(df_uncategorized, use_container_width=True)
+                st.dataframe(df_uncategorized, width="stretch")
                 st.markdown("---")
                 st.subheader("Categorized Transactions")
                 df_categorized = categorized_df[categorized_df['category'] != 'uncategorized']
@@ -65,9 +75,9 @@ with tab1:
                 selected_category = st.selectbox("Filter by Category", ["All"] + sorted(df_categorized['category'].unique().tolist()))
                 
                 if selected_category == "All":
-                    st.dataframe(df_categorized, use_container_width=True)
+                    st.dataframe(df_categorized, width="stretch")
                 else:
-                    st.dataframe(df_categorized[df_categorized['category'] == selected_category], use_container_width=True)
+                    st.dataframe(df_categorized[df_categorized['category'] == selected_category], width="stretch")
                 
                 # Provide a download button for the uncategorized transactions
                 csv_data = df_uncategorized.to_csv(index=False).encode('utf-8')
@@ -83,11 +93,6 @@ with tab1:
 
 with tab2:
     st.header("Manage Categories")
-    
-    st.subheader("Current Categories")
-    st.json(categories)
-    
-    st.markdown("---")
     
     col_add_kw, col_add_cat = st.columns(2)
     
@@ -132,3 +137,8 @@ with tab2:
                         st.warning("Category already exists.")
                 else:
                     st.warning("Please enter a valid category name.")
+
+    st.markdown("---")
+    
+    st.subheader("Current Categories")
+    st.json(categories)
