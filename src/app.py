@@ -3,9 +3,7 @@ import pandas as pd
 import sys
 import os
 
-# Add the src directory to the system path to allow importing modules from it
-sys.path.append(os.path.join(os.path.dirname(__file__), "src"))
-
+# The app is now in the src directory, so local modules can be imported directly.
 from utils import get_df_transactions, categorize_transactions
 from dkb_config import load_categories, save_categories
 
