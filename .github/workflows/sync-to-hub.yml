@@ -19,4 +19,4 @@ jobs:
       - name: Push to Hugging Face
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: git push https://riccardonio:$HF_TOKEN@huggingface.co/spaces/riccardonio/dkb_monitor main
+        run: git push https://riccardonio:$HF_TOKEN@huggingface.co/spaces/riccardonio/dkb_transactions_monitor main
