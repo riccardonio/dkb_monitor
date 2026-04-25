@@ -26,7 +26,8 @@
     "le.bonta.di.toschi"
   ],
   "stipendio": [
-    "gehalt"
+    "gehalt",
+    "airbus"
   ],
   "acquisti online & offline": [
     "amazon",
@@ -48,8 +49,9 @@
     "wunsch",
     "374/26sc07of"
   ],
-  "mantenimento_bimbi": [
-    "kindesunterhalt"
+  "Bimbi": [
+    "kindesunterhalt",
+    "kinderbetreeung"
   ],
   "trasporti": [
     "db vertrieb",
@@ -91,5 +93,8 @@
   "prelievi": [
     "stadtsparkasse.augsburg",
     "vr.bank"
+  ],
+  "Mutuo": [
+    "darlehen"
   ]
 }

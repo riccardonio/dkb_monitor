@@ -31,7 +31,7 @@ with tab1:
         if st.button("Run Analysis"):
             try:
                 # We can pass the uploaded_file directly to get_df_transactions
-                df = get_df_transactions(uploaded_file)
+                df, df_internal = get_df_transactions(uploaded_file)
                 categorized_df = categorize_transactions(df, categories)
                 
                 st.success("Analysis complete!")
@@ -87,6 +87,10 @@ with tab1:
                     file_name="uncategorized.csv",
                     mime="text/csv"
                 )
+                
+                st.markdown("---")
+                st.subheader("Internal Transactions")
+                st.dataframe(df_internal, width="stretch")
                 
             except Exception as e:
                 st.error(f"An error occurred while processing the file: {e}")

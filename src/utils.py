@@ -31,9 +31,9 @@ def get_df_transactions(filepath):
       
     df = pd.read_csv(filepath, delimiter = ";", skiprows=4)
     cols_to_keep = ["Buchungsdatum", "Zahlungsempfänger*in", "Verwendungszweck", "Betrag (€)"]
-    df_mini = df[cols_to_keep]
-    # join columns "Zahlungsempfänger*in", "Verwendungszweck"
-    df_mini["Zahlungsempfänger*in"] = df_mini["Zahlungsempfänger*in"].astype(str) + " " + df_mini["Verwendungszweck"].astype(str)
+    df_mini = df[cols_to_keep].copy()
+    # join columns "Zahlungsempfänger*in", "Verwendungszweck" using .loc to prevent warnings
+    df_mini.loc[:, "Zahlungsempfänger*in"] = df_mini["Zahlungsempfänger*in"].astype(str) + " " + df_mini["Verwendungszweck"].astype(str)
     df_mini = df_mini.drop(columns=["Verwendungszweck"])
     # rename the columns from german to english
     df_mini = df_mini.rename(columns={
@@ -46,13 +46,14 @@ def get_df_transactions(filepath):
     # Filter out rows where the receiver contains Riccardo Parenti or Parenti Riccardo,
     # UNLESS the receiver also contains the keyword "gehalt"
     mask_name = df_mini['receiver'].str.contains('Riccardo Parenti|Parenti Riccardo|Parenti,Riccardo|Riccardo, Parenti', case=False, na=False)
-    mask_gehalt = df_mini['receiver'].str.contains('gehalt', case=False, na=False)
+    mask_keep = df_mini['receiver'].str.contains('Airbus|Kinderbetreeung|Darlehen', case=False, na=False)
     
     # Drop the row if it matches the name BUT does NOT contain 'gehalt'
-    mask_to_drop = mask_name & ~mask_gehalt
+    mask_to_drop = mask_name & ~mask_keep
+    df_internal = df_mini[mask_to_drop].copy()
     df_mini = df_mini[~mask_to_drop]
     
-    return df_mini
+    return df_mini, df_internal
 
 
 def categorize_transactions(df, categories):
