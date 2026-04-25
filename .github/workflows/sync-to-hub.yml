@@ -1,0 +1,22 @@
+name: Sync to Hugging Face Hub
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Add these two lines to force Node.js 24 and silence the warning
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: huggingface/hub-sync@v0.1.0
+        with:
+          github_repo_id: ${{ github.repository }}
+          # Make sure your actual username/space-name is still here!
+          huggingface_repo_id: riccardonio/dkb_monitor 
+          hf_token: ${{ secrets.HF_TOKEN }}
+          space_sdk: streamlit
