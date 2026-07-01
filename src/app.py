@@ -63,32 +63,36 @@ with tab1:
                     """
                     st.markdown(html_str, unsafe_allow_html=True)
                       
-                st.subheader("Uncategorized Transactions")
                 df_uncategorized = categorized_df[categorized_df['category'] == 'uncategorized']
-                st.dataframe(df_uncategorized, width="stretch")
-                st.markdown("---")
-                st.subheader("Categorized Transactions")
                 df_categorized = categorized_df[categorized_df['category'] != 'uncategorized']
                 
-                selected_category = st.selectbox("Filter by Category", ["All"] + sorted(df_categorized['category'].unique().tolist()))
+                tx_tab1, tx_tab2, tx_tab3 = st.tabs(["Uncategorized", "Categorized", "Internal"])
                 
-                if selected_category == "All":
-                    st.dataframe(df_categorized, width="stretch")
-                else:
-                    st.dataframe(df_categorized[df_categorized['category'] == selected_category], width="stretch")
+                with tx_tab1:
+                    st.subheader("Uncategorized Transactions")
+                    st.dataframe(df_uncategorized, width="stretch")
+                    
+                    # Provide a download button for the uncategorized transactions
+                    csv_data = df_uncategorized.to_csv(index=False).encode('utf-8')
+                    st.download_button(
+                        label="Download Uncategorized CSV",
+                        data=csv_data,
+                        file_name="uncategorized.csv",
+                        mime="text/csv"
+                    )
                 
-                # Provide a download button for the uncategorized transactions
-                csv_data = df_uncategorized.to_csv(index=False).encode('utf-8')
-                st.download_button(
-                    label="Download Uncategorized CSV",
-                    data=csv_data,
-                    file_name="uncategorized.csv",
-                    mime="text/csv"
-                )
+                with tx_tab2:
+                    st.subheader("Categorized Transactions")
+                    selected_category = st.selectbox("Filter by Category", ["All"] + sorted(df_categorized['category'].unique().tolist()))
+                    
+                    if selected_category == "All":
+                        st.dataframe(df_categorized, width="stretch")
+                    else:
+                        st.dataframe(df_categorized[df_categorized['category'] == selected_category], width="stretch")
                 
-                st.markdown("---")
-                st.subheader("Internal Transactions")
-                st.dataframe(df_internal, width="stretch")
+                with tx_tab3:
+                    st.subheader("Internal Transactions")
+                    st.dataframe(df_internal, width="stretch")
                 
             except Exception as e:
                 st.error(f"An error occurred while processing the file: {e}")

@@ -23,7 +23,16 @@
     "backwerk",
     "flannigan.s.post",
     "food.container.gmbh",
-    "le.bonta.di.toschi"
+    "le.bonta.di.toschi",
+    "yormas",
+    "momos.gemuse.kebab",
+    "baeckerei",
+    "moments/augsburg",
+    "backerei.muller",
+    "mavin",
+    "yorma",
+    "cafe.corso",
+    "autogrill"
   ],
   "stipendio": [
     "gehalt",
@@ -39,7 +48,9 @@
     "rossmann",
     "dm.drogerie",
     "media.markt",
-    "pittarosso"
+    "pittarosso",
+    "samsung electronics",
+    "flg leasing gmbh"
   ],
   "terapie": [
     "sorrento",
@@ -56,7 +67,9 @@
   "trasporti": [
     "db vertrieb",
     "augsburg carsharing",
-    "obb-personenverkehr"
+    "obb-personenverkehr",
+    "shell.",
+    "lufthansa"
   ],
   "abbonamenti": [
     "dazn",
@@ -69,11 +82,14 @@
     "forteil",
     "immobilien scout gmbh",
     "ikea",
-    "tino pfeilschifter"
+    "tino pfeilschifter",
+    "mh-schackstrasse 55",
+    "vattenfal"
   ],
   "essenziali": [
     "apotheke",
-    "bauhaus"
+    "bauhaus",
+    "kaufland"
   ],
   "svago": [
     "brunnen.bar",
@@ -81,7 +97,14 @@
     "eisdiele.stanghetto",
     "ombretta",
     "picnic/augsburg",
-    "numeri.uno"
+    "numeri.uno",
+    "cohibar",
+    "flosslaende",
+    "hans.im.glueck",
+    "aposto.augsburg",
+    "vincafe",
+    "ristorante.k2",
+    "ristorante.le.colonne"
   ],
   "ETFs": [
     "wertpapier-sparplan",
@@ -92,9 +115,17 @@
   ],
   "prelievi": [
     "stadtsparkasse.augsburg",
-    "vr.bank"
+    "vr.bank",
+    "deutschebank/atm"
   ],
   "Mutuo": [
     "darlehen"
+  ],
+  "mantenimento": [
+    "trennungsunterhalt"
+  ],
+  "salute": [
+    "urolog",
+    "farmacia.pachetti"
   ]
 }
