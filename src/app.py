@@ -12,14 +12,14 @@ from utils import (
 from dkb_config import load_categories
 from equity import render_equity_tab
 
-st.set_page_config(page_title="DKB Monitor Analysis", layout="wide")
+st.set_page_config(page_title="Personal Finance Assistant", layout="wide")
 
-st.title("DKB Monitor Analysis")
+st.title("Personal Finance Assistant")
 
 # Load categories at the beginning of the app run
 categories = load_categories()
 
-tab1, tab2, tab3 = st.tabs(["Analysis", "Manage Categories", "Equity"])
+tab1, tab2, tab3 = st.tabs(["Expenses Analysis", "Manage Categories", "Assets"])
 
 with tab1:
     st.markdown("Upload a CSV file containing your DKB transactions to analyze them.")

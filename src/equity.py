@@ -123,7 +123,7 @@ def render_equity_tab():
     st.markdown("""
         <style>
         /* Make the container look glassy and premium */
-        div[data-testid="stVerticalBlockBorderWrapper"] {
+        div.st-key-equity_ledger {
             background: rgba(255, 255, 255, 0.01) !important;
             border: 1px solid rgba(255, 255, 255, 0.07) !important;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2) !important;
@@ -131,7 +131,7 @@ def render_equity_tab():
             padding: 8px 12px !important;
         }
         /* Make delete buttons small, borderless, and centered */
-        div[data-testid="stHorizontalBlock"] div[data-testid="column"]:last-child button {
+        div.st-key-equity_ledger div[data-testid="column"]:last-child button {
             padding: 0px !important;
             height: 24px !important;
             min-height: 24px !important;
@@ -146,34 +146,44 @@ def render_equity_tab():
             justify-content: center !important;
             color: #ff453a !important;
         }
-        div[data-testid="stHorizontalBlock"] div[data-testid="column"]:last-child button:hover {
+        div.st-key-equity_ledger div[data-testid="column"]:last-child button:hover {
             background-color: rgba(255, 69, 58, 0.15) !important;
             border-radius: 6px !important;
             color: #ff6961 !important;
         }
-        /* Style each row container (the horizontal blocks that are not inside a form) */
-        div[data-testid="stHorizontalBlock"]:not(form *) {
+        /* Style each row container inside the glassy ledger table */
+        div.st-key-equity_ledger [data-testid="stHorizontalBlock"] {
             border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
             padding: 8px 8px !important;
             margin-bottom: 0px !important;
             background-color: transparent !important;
         }
-        /* Hover effect on rows */
-        div[data-testid="stHorizontalBlock"]:not(form *):hover {
-            background-color: rgba(255, 255, 255, 0.02) !important;
+        /* Zebra striping: alternate backgrounds of row containers */
+        div.st-key-equity_ledger div[data-testid="stVerticalBlock"] > div:has([data-testid="stHorizontalBlock"]):nth-child(odd) {
+            background-color: #000000 !important;
+            border-radius: 6px !important;
+        }
+        div.st-key-equity_ledger div[data-testid="stVerticalBlock"] > div:has([data-testid="stHorizontalBlock"]):nth-child(even) {
+            background-color: #262730 !important;
+            border-radius: 6px !important;
+        }
+        /* Hover effect on rows (slightly brighter highlight) */
+        div.st-key-equity_ledger div[data-testid="stVerticalBlock"] > div:has([data-testid="stHorizontalBlock"]):hover {
+            background-color: rgba(255, 255, 255, 0.08) !important;
+            border-radius: 6px !important;
         }
         /* Remove border from the last row */
-        div[data-testid="stHorizontalBlock"]:not(form *):last-of-type {
+        div.st-key-equity_ledger div[data-testid="stVerticalBlock"] > div:last-child [data-testid="stHorizontalBlock"] {
             border-bottom: none !important;
         }
         /* Vertically align ledger row text/content, excluding the entry form */
-        div[data-testid="stHorizontalBlock"]:not(form *) > div[data-testid="column"] {
+        div.st-key-equity_ledger [data-testid="stHorizontalBlock"] > div[data-testid="column"] {
             display: flex !important;
             align-items: center !important;
             min-height: 35px !important;
         }
         /* Ensure clean font styling */
-        div[data-testid="stHorizontalBlock"]:not(form *) p {
+        div.st-key-equity_ledger [data-testid="stHorizontalBlock"] p {
             font-family: 'Inter', -apple-system, sans-serif !important;
             font-size: 0.9rem !important;
             margin: 0 !important;
@@ -433,7 +443,7 @@ def render_equity_tab():
         st.markdown("---")
         st.subheader("Current Equity Ledger")
         
-        with st.container(border=True):
+        with st.container(border=True, key="equity_ledger"):
             # Display headers in columns
             headers = ["Date", "Cash", "Tagesgeld/XEON", "Festgeld", "Stocks", "ETF", "Risk Free %", "Total", "Delta month", "Delta year", ""]
             col_widths = [1.2, 0.9, 1.1, 0.9, 0.9, 0.9, 1.0, 1.1, 1.1, 1.1, 0.4]
