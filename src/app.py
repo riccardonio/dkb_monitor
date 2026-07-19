@@ -1,11 +1,15 @@
 import streamlit as st
-import pandas as pd
-import sys
-import os
 
 # The app is now in the src directory, so local modules can be imported directly.
-from utils import get_df_transactions, categorize_transactions
-from dkb_config import load_categories, save_categories
+from utils import (
+    get_df_transactions,
+    categorize_transactions,
+    generate_summary,
+    get_total_net,
+    add_keyword_to_category,
+    create_category,
+)
+from dkb_config import load_categories
 
 st.set_page_config(page_title="DKB Monitor Analysis", layout="wide")
 
@@ -36,15 +40,10 @@ with tab1:
                 
                 st.subheader("Summary")
                 
-                # Group by category, sum amounts
-                summary_df = categorized_df.groupby('category')['amount'].sum().round(2).reset_index()
-                summary_df.columns = ['Category', 'Total Sum (€)']
+                # Generate summary and calculate total net using helpers
+                summary_df = generate_summary(categorized_df, months_parameter)
+                total_net = get_total_net(categorized_df)
                 
-                # Calculate monthly average based on the selected number of months
-                summary_df['Monthly Average (€)'] = (summary_df['Total Sum (€)'] / months_parameter).round(2)
-                
-                # Sort by the Total Sum (ascending since expenses are negative)
-                summary_df = summary_df.sort_values(by='Total Sum (€)', ascending=True)
                 col1, col2 = st.columns([1, 2])
                 
                 with col1:
@@ -53,7 +52,6 @@ with tab1:
                     st.dataframe(summary_df, width="stretch", height=df_height, hide_index=True)
                 
                 with col2:
-                    total_net = categorized_df[categorized_df['category'] != 'ETFs']['amount'].sum()
                     color = "#ff4b4b" if total_net < 0 else "#09ab3b"
                     html_str = f"""
                     <div style='background-color: #262730; padding: 20px; border-radius: 10px; text-align: center; border: 1px solid #333; margin-top: 20px;'>
@@ -110,19 +108,12 @@ with tab2:
             submit_keyword = st.form_submit_button("Add Keyword")
             
             if submit_keyword:
-                if new_keyword:
-                    new_keyword_lower = new_keyword.strip().lower()
-                    # Check case-insensitively if it exists
-                    existing_lower = [k.lower() for k in categories[selected_cat]]
-                    if new_keyword_lower not in existing_lower:
-                        categories[selected_cat].append(new_keyword_lower)
-                        save_categories(categories)
-                        st.success(f"Added '{new_keyword_lower}' to '{selected_cat}'!")
-                        st.rerun()
-                    else:
-                        st.warning("Keyword already exists in this category.")
+                success, msg = add_keyword_to_category(categories, selected_cat, new_keyword)
+                if success:
+                    st.success(msg)
+                    st.rerun()
                 else:
-                    st.warning("Please enter a valid keyword.")
+                    st.warning(msg)
                     
     with col_add_cat:
         st.subheader("Create New Category")
@@ -132,17 +123,12 @@ with tab2:
             submit_cat = st.form_submit_button("Create Category")
             
             if submit_cat:
-                if new_cat_name:
-                    if new_cat_name not in categories:
-                        initial_kw_list = [initial_keyword.strip().lower()] if initial_keyword else []
-                        categories[new_cat_name] = initial_kw_list
-                        save_categories(categories)
-                        st.success(f"Created category '{new_cat_name}'!")
-                        st.rerun()
-                    else:
-                        st.warning("Category already exists.")
+                success, msg = create_category(categories, new_cat_name, initial_keyword)
+                if success:
+                    st.success(msg)
+                    st.rerun()
                 else:
-                    st.warning("Please enter a valid category name.")
+                    st.warning(msg)
 
     st.markdown("---")
     

@@ -84,6 +84,69 @@ def categorize_transactions(df, categories):
     return df
 
 
+def generate_summary(categorized_df: pd.DataFrame, months: int) -> pd.DataFrame:
+    """
+    Groups categorized transactions by category, sums the amounts,
+    calculates the monthly average, and sorts by total sum.
+    """
+    # Group by category, sum amounts
+    summary_df = categorized_df.groupby('category')['amount'].sum().round(2).reset_index()
+    summary_df.columns = ['Category', 'Total Sum (€)']
+    
+    # Calculate monthly average based on the selected number of months
+    summary_df['Monthly Average (€)'] = (summary_df['Total Sum (€)'] / months).round(2)
+    
+    # Sort by the Total Sum (ascending since expenses are negative)
+    summary_df = summary_df.sort_values(by='Total Sum (€)', ascending=True)
+    return summary_df
+
+
+def get_total_net(categorized_df: pd.DataFrame) -> float:
+    """
+    Calculates the total net transactions sum excluding ETFs.
+    """
+    return float(categorized_df[categorized_df['category'] != 'ETFs']['amount'].sum())
+
+
+def add_keyword_to_category(categories: dict, selected_cat: str, new_keyword: str) -> tuple[bool, str]:
+    """
+    Validates and adds a new keyword to an existing category, saving the updated categories.
+    Returns (success_bool, message).
+    """
+    from dkb_config import save_categories
+    if not new_keyword:
+        return False, "Please enter a valid keyword."
+    
+    new_keyword_lower = new_keyword.strip().lower()
+    # Check case-insensitively if it exists
+    existing_lower = [k.lower() for k in categories.get(selected_cat, [])]
+    if new_keyword_lower not in existing_lower:
+        categories[selected_cat].append(new_keyword_lower)
+        save_categories(categories)
+        return True, f"Added '{new_keyword_lower}' to '{selected_cat}'!"
+    else:
+        return False, "Keyword already exists in this category."
+
+
+def create_category(categories: dict, new_cat_name: str, initial_keyword: str) -> tuple[bool, str]:
+    """
+    Validates and creates a new category with an optional initial keyword, saving categories.
+    Returns (success_bool, message).
+    """
+    from dkb_config import save_categories
+    if not new_cat_name:
+        return False, "Please enter a valid category name."
+    
+    if new_cat_name not in categories:
+        initial_kw_list = [initial_keyword.strip().lower()] if initial_keyword else []
+        categories[new_cat_name] = initial_kw_list
+        save_categories(categories)
+        return True, f"Created category '{new_cat_name}'!"
+    else:
+        return False, "Category already exists."
+
+
+
 
 
 
