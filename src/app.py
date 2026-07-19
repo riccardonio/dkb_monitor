@@ -10,6 +10,7 @@ from utils import (
     create_category,
 )
 from dkb_config import load_categories
+from equity import render_equity_tab
 
 st.set_page_config(page_title="DKB Monitor Analysis", layout="wide")
 
@@ -18,7 +19,7 @@ st.title("DKB Monitor Analysis")
 # Load categories at the beginning of the app run
 categories = load_categories()
 
-tab1, tab2 = st.tabs(["Analysis", "Manage Categories"])
+tab1, tab2, tab3 = st.tabs(["Analysis", "Manage Categories", "Equity"])
 
 with tab1:
     st.markdown("Upload a CSV file containing your DKB transactions to analyze them.")
@@ -134,3 +135,6 @@ with tab2:
     
     st.subheader("Current Categories")
     st.json(categories)
+
+with tab3:
+    render_equity_tab()

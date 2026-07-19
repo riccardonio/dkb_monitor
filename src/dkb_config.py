@@ -14,6 +14,7 @@ MAIN_DIR = str(Path(__file__).resolve().parents[1])
 DATA_DIR = os.path.join(MAIN_DIR, "data")
 FILENAME_TRANSACTIONS = os.path.join(DATA_DIR, FILE_NAME)
 CATEGORIES_FILE = os.path.join(DATA_DIR, "categories.json")
+EQUITY_FILE = os.path.join(DATA_DIR, "equity.csv")
 
 def load_categories():
     if not os.path.exists(CATEGORIES_FILE):
