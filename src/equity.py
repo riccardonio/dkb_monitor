@@ -5,7 +5,7 @@ import streamlit as st
 import altair as alt
 from dkb_config import EQUITY_FILE
 
-COLUMNS = ['Date', 'Cash', 'Tagesgeld/XEON', 'Festgeld', 'Stocks', 'ETF', 'Risk Free %', 'Total']
+COLUMNS = ['Date', 'Cash', 'Tagesgeld/XEON', 'Festgeld', 'Stocks', 'ETF', 'Risk Free %', 'Total', 'Note']
 
 def load_equity_data() -> pd.DataFrame:
     """
@@ -19,14 +19,23 @@ def load_equity_data() -> pd.DataFrame:
         # Ensure all standard columns exist
         for col in COLUMNS:
             if col not in df.columns:
-                df[col] = 0.0 if col != 'Date' else pd.Timestamp.now().strftime('%Y-%m-%d')
+                if col == 'Note':
+                    df[col] = ""
+                elif col == 'Date':
+                    df[col] = pd.Timestamp.now().strftime('%Y-%m-%d')
+                else:
+                    df[col] = 0.0
         
         # Parse and standardize Date format
         df['Date'] = pd.to_datetime(df['Date']).dt.strftime('%Y-%m-%d')
         
         # Ensure numeric types
-        numeric_cols = [c for c in COLUMNS if c != 'Date']
+        numeric_cols = [c for c in COLUMNS if c not in ['Date', 'Note']]
         df[numeric_cols] = df[numeric_cols].apply(pd.to_numeric, errors='coerce').fillna(0.0)
+        
+        # Ensure Note is clean string
+        if 'Note' in df.columns:
+            df['Note'] = df['Note'].fillna("").astype(str)
         
         # Sort and clean index
         df = df.sort_values(by='Date', ascending=False).reset_index(drop=True)
@@ -90,7 +99,7 @@ def render_equity_tab():
     # Proactively upgrade the CSV schema to save MoM/YoY deltas if they are missing
     try:
         raw_df = pd.read_csv(EQUITY_FILE)
-        if 'Delta month' not in raw_df.columns or 'Delta year' not in raw_df.columns:
+        if 'Delta month' not in raw_df.columns or 'Delta year' not in raw_df.columns or 'Note' not in raw_df.columns:
             save_equity_data(df)
     except Exception:
         pass
@@ -379,17 +388,19 @@ def render_equity_tab():
         default_festgeld = float(latest['Festgeld'])
         default_stocks = float(latest['Stocks'])
         default_etf = float(latest['ETF'])
+        default_note = str(latest.get('Note', ''))
     else:
         default_cash = 0.0
         default_tagesgeld = 0.0
         default_festgeld = 0.0
         default_stocks = 0.0
         default_etf = 0.0
+        default_note = ""
 
     # 3. Add Entry Form (All inputs in a single line, displayed second)
     st.subheader("Add / Update Equity Entry")
     with st.form("add_equity_form", clear_on_submit=False):
-        col_date, col_cash, col_tg, col_fg, col_st, col_etf = st.columns(6)
+        col_date, col_cash, col_tg, col_fg, col_st, col_etf, col_note = st.columns([1, 1, 1, 1, 1, 1, 2])
         with col_date:
             entry_date = st.date_input("Date", value=datetime.date.today())
         with col_cash:
@@ -402,6 +413,8 @@ def render_equity_tab():
             stocks = st.number_input("Stocks (€)", min_value=0.0, value=default_stocks, step=100.0, format="%.2f")
         with col_etf:
             etf = st.number_input("ETF (€)", min_value=0.0, value=default_etf, step=100.0, format="%.2f")
+        with col_note:
+            note = st.text_input("Note (optional)", value=default_note)
             
         submit_btn = st.form_submit_button("Add Row to Top", use_container_width=True)
         
@@ -419,7 +432,8 @@ def render_equity_tab():
                 'Stocks': stocks,
                 'ETF': etf,
                 'Risk Free %': risk_free_pct,
-                'Total': total
+                'Total': total,
+                'Note': note
             }
             
             # Check if entry already exists for this date and overwrite if so
@@ -445,8 +459,8 @@ def render_equity_tab():
         
         with st.container(border=True, key="equity_ledger"):
             # Display headers in columns
-            headers = ["Date", "Cash", "Tagesgeld/XEON", "Festgeld", "Stocks", "ETF", "Risk Free %", "Total", "Delta month", "Delta year", ""]
-            col_widths = [1.2, 0.9, 1.1, 0.9, 0.9, 0.9, 1.0, 1.1, 1.1, 1.1, 0.4]
+            headers = ["Date", "Cash", "Tagesgeld/XEON", "Festgeld", "Stocks", "ETF", "Risk Free %", "Total", "Delta month", "Delta year", "Note", ""]
+            col_widths = [1.1, 0.8, 1.0, 0.8, 0.8, 0.8, 0.9, 1.0, 1.0, 1.0, 1.5, 0.4]
             
             header_cols = st.columns(col_widths)
             for col, header in zip(header_cols, headers):
@@ -490,8 +504,14 @@ def render_equity_tab():
                     sign = "+" if delta_y_val > 0 else ""
                     row_cols[9].markdown(f"<span style='color: {color}; font-weight: 500;'>{sign}€{delta_y_val:,.0f}</span>", unsafe_allow_html=True)
                 
-                # Render small delete button (index 10)
-                if row_cols[10].button("❌", key=f"del_{row['Date']}", help=f"Delete entry for {row['Date']}"):
+                # Note column (index 10)
+                note_val = row.get('Note', '')
+                if pd.isna(note_val) or note_val is None:
+                    note_val = ""
+                row_cols[10].write(str(note_val))
+                
+                # Render small delete button (index 11)
+                if row_cols[11].button("❌", key=f"del_{row['Date']}", help=f"Delete entry for {row['Date']}"):
                     df = df[df['Date'] != row['Date']]
                     if save_equity_data(df):
                         st.success(f"Deleted entry for {row['Date']}!")

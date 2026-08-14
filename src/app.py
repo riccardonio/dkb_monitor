@@ -11,7 +11,7 @@ from utils import (
 )
 from dkb_config import load_categories
 from equity import render_equity_tab
-
+# Force reload to pick up equity.py changes
 st.set_page_config(page_title="Personal Finance Assistant", layout="wide")
 
 st.title("Personal Finance Assistant")

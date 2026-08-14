@@ -32,7 +32,10 @@
     "mavin",
     "yorma",
     "cafe.corso",
-    "autogrill"
+    "autogrill",
+    "max rischart",
+    "bäckerei",
+    "imbiss"
   ],
   "stipendio": [
     "gehalt",
@@ -74,7 +77,8 @@
   "abbonamenti": [
     "dazn",
     "Ihr Einkauf bei Google Payment Ireland Limited",
-    "finion capital"
+    "finion capital",
+    "google one visa"
   ],
   "alloggio": [
     "airbnb",
@@ -104,14 +108,17 @@
     "aposto.augsburg",
     "vincafe",
     "ristorante.k2",
-    "ristorante.le.colonne"
+    "ristorante.le.colonne",
+    "kulperhuette",
+    "kesselhaus"
   ],
   "ETFs": [
     "wertpapier-sparplan",
     "etf luca emma"
   ],
   "telefonia": [
-    "telefonica germany gmbh"
+    "telefonica germany gmbh",
+    "telekom"
   ],
   "prelievi": [
     "stadtsparkasse.augsburg",
