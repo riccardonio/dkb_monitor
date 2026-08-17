@@ -245,7 +245,7 @@ def render_equity_tab():
                 trend_chart = (lines + points).properties(
                     height=300
                 )
-                st.altair_chart(trend_chart, use_container_width=True)
+                st.altair_chart(trend_chart, width="stretch")
             else:
                 st.info("Add at least 2 historical entries to view the Net Worth Trend graph.")
                 
@@ -297,7 +297,7 @@ def render_equity_tab():
                     height=300
                 )
                 
-                st.altair_chart(chart_layered, use_container_width=True)
+                st.altair_chart(chart_layered, width="stretch")
             else:
                 st.info("No asset values are positive to display allocation.")
                 
@@ -416,7 +416,7 @@ def render_equity_tab():
         with col_note:
             note = st.text_input("Note (optional)", value=default_note)
             
-        submit_btn = st.form_submit_button("Add Row to Top", use_container_width=True)
+        submit_btn = st.form_submit_button("Add Row to Top", width="stretch")
         
         if submit_btn:
             date_str = entry_date.strftime('%Y-%m-%d')

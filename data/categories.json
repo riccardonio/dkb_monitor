@@ -35,7 +35,10 @@
     "autogrill",
     "max rischart",
     "bäckerei",
-    "imbiss"
+    "imbiss",
+    "osteria.parlascio",
+    "la.cantina.di.alfredo",
+    "pkj.gastronomie"
   ],
   "stipendio": [
     "gehalt",
@@ -88,7 +91,8 @@
     "ikea",
     "tino pfeilschifter",
     "mh-schackstrasse 55",
-    "vattenfal"
+    "vattenfal",
+    "rundfunk ard, zdf"
   ],
   "essenziali": [
     "apotheke",
@@ -110,7 +114,13 @@
     "ristorante.k2",
     "ristorante.le.colonne",
     "kulperhuette",
-    "kesselhaus"
+    "kesselhaus",
+    "l.eresiarca",
+    ".vinaiolo",
+    "piscina.vicopelago",
+    "weinstrasse.augsburg",
+    "tapadinhas.weinimpor",
+    "pantheon.cafe"
   ],
   "ETFs": [
     "wertpapier-sparplan",
@@ -133,6 +143,7 @@
   ],
   "salute": [
     "urolog",
-    "farmacia.pachetti"
+    "farmacia.pachetti",
+    "synlab mvz"
   ]
 }
