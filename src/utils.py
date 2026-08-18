@@ -146,6 +146,37 @@ def create_category(categories: dict, new_cat_name: str, initial_keyword: str) -
         return False, "Category already exists."
 
 
+def prepare_comparison_data(summary_df: pd.DataFrame, reference_dict: dict) -> pd.DataFrame:
+    """
+    Merges current analysis monthly averages with saved reference values
+    and calculates differences per category.
+    """
+    if summary_df is None or summary_df.empty:
+        current_map = {}
+    else:
+        current_map = dict(zip(summary_df['Category'], summary_df['Monthly Average (€)']))
+
+    all_categories = sorted(list(set(current_map.keys()).union(set(reference_dict.keys()))))
+    
+    records = []
+    for cat in all_categories:
+        curr_val = round(float(current_map.get(cat, 0.0)), 2)
+        ref_val = round(float(reference_dict.get(cat, 0.0)), 2)
+        diff = round(curr_val - ref_val, 2)
+        records.append({
+            'Category': cat,
+            'Current Monthly Avg (€)': curr_val,
+            'Reference Monthly Avg (€)': ref_val,
+            'Difference (€)': diff
+        })
+    
+    comp_df = pd.DataFrame(records)
+    if not comp_df.empty:
+        comp_df = comp_df.sort_values(by='Current Monthly Avg (€)', ascending=True).reset_index(drop=True)
+    return comp_df
+
+
+
 
 
 
